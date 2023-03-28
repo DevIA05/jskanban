@@ -542,7 +542,6 @@ var dragula = require('dragula');
         console.log("---------------- ICI -------------------------------")
         // if(typeof(this.clickfn) === 'function')
         //     this.clickfn(this);
-        console.log(KanbanTest.boards)
       })
     }
 
