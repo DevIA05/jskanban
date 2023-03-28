@@ -76,8 +76,7 @@
         click: function(el) {
 
           console.warn("----------------- click-ICI -----------")
-          idItem = el.getAttribute("data-eid")
-          modifyTask("")
+          modifyTask(el)
           console.log("Trigger on all items click!");
         },
         context: function(el, e) {
