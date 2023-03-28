@@ -2,5 +2,16 @@
 // console.log(sayHello()); // logs "Hello!" to the console
 
 import KanbanAPI from "./api/KanbanAPI.js";
-console.log(KanbanAPI.getItems(1));
 
+// ======================================================
+//  ====================== Test ========================
+// ======================================================
+
+//console.log(KanbanAPI.getItems(3))
+//console.log(KanbanAPI.insertItem(1, "quelque chose"));
+// KanbanAPI.updateItem(56065, {
+//     columnId: 1, 
+//     position: 0,
+//     content: "I've changed"
+// });
+KanbanAPI.deleteItem(56065)

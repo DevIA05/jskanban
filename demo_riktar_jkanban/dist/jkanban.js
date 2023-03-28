@@ -511,6 +511,8 @@ var dragula = require('dragula');
 
     function __onclickHandler (nodeItem, clickfn) {
       nodeItem.addEventListener('click', function (e) {
+        console.log("---------------- onclick-ICI -------------------------------")
+        console.log(e)
         if (!self.options.propagationHandlers.includes('click')) e.preventDefault()
         self.options.click(this)
         if (typeof this.clickfn === 'function') this.clickfn(this)
@@ -537,8 +539,10 @@ var dragula = require('dragula');
       nodeItem.addEventListener('click', function (e) {
         e.preventDefault()
         self.options.buttonClick(this, boardId)
+        console.log("---------------- ICI -------------------------------")
         // if(typeof(this.clickfn) === 'function')
         //     this.clickfn(this);
+        console.log(KanbanTest.boards)
       })
     }
 
