@@ -14,7 +14,7 @@ function modifyTask(el){
     // Create form to edit the text
     const formItem = document.createElement("form");
     formItem.setAttribute("class", "itemform");
-    formItem.innerHTML = `<div class="form-group"><textarea class="form-control" rows="2" autofocus>${title}</textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Edit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>`;
+    formItem.innerHTML = `<div class="form-group"><textarea class="form-control" rows="2" autofocus>${title}</textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Edit</button><button type="button" onclick="cancelForm(this)" class="btn btn-default btn-xs pull-right">Cancel</button></div>`;
     KanbanTest.addForm(boardId, formItem);
     
     // Click on Change button
@@ -28,14 +28,15 @@ function modifyTask(el){
         })
         form.remove(); // remove form from html structure after modification
     });
-   
-    // Remove the form when Cancel button is clicked
-    document.getElementById("CancelBtn").onclick = function() {
-        const form = this.closest('form');
-        console.log(form.querySelector("textarea"))
-        // Supprimer le formulaire
-        form.remove();
-    };
+}
+
+/** Deletes the form
+ * where the clicked cancel button is contained
+ * @param {Object} btnCancel 
+ */
+function cancelForm(btnCancel){
+    const form = btnCancel.closest('form');
+    form.remove();
 }
 
 /** Disable creation and edit 
