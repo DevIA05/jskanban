@@ -6,6 +6,9 @@ def index(request):
     data = getDataFromDB()
     return render(request, "index.html", context = {'data': data})
 
+#** Send tasks grouped by column
+#*  by sorting columns and tasks according to their position
+#* return list[dict[dict]] ([column[task]])
 def getDataFromDB():
     
     # retrieve all columns
