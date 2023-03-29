@@ -76,6 +76,11 @@
           enabled: true,
         },
 
+        dragendBoard: function (el, source) {
+            console.warn("----------------- dragEndBoard-ICI -----------")
+
+        },
+
         click: function(el) {
 
           console.warn("----------------- click-ICI -----------")
@@ -86,6 +91,7 @@
           console.log("Trigger on all items right-click!");
         },
         dropEl: function(el, target, source, sibling){
+          console.warn("----------------- dropEl-ICI -----------")  
           console.log(target.parentElement.getAttribute('data-id'));
           console.log(el, target, source, sibling)
         },

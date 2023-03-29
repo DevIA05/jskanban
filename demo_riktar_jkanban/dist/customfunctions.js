@@ -11,32 +11,26 @@ function modifyTask(el){
     const idItem = el.getAttribute("data-eid")
     const boardId = KanbanTest.getParentBoardID(idItem)
 
-    console.warn(idItem)
-
     // Create form to edit the text
     const formItem = document.createElement("form");
     formItem.setAttribute("class", "itemform");
     formItem.innerHTML = `<div class="form-group"><textarea class="form-control" rows="2" autofocus>${title}</textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Edit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>`;
     KanbanTest.addForm(boardId, formItem);
     
-    
     // Click on Change button
     formItem.addEventListener("submit", function(e) {
         e.preventDefault();
-        const form = e.target.closest("form"); // Récupérer l'élément form parent
-        const textarea = form.querySelector("textarea"); // Récupérer le textarea à l'intérieur du form
-        const text = textarea.value; // Récupérer la valeur du textarea
-        console.log(text); // Afficher la valeur dans la console
-        KanbanTest.replaceElement(idItem, {   // replace the item with new info
+        const form = e.target.closest("form");           // Get html tag form parent
+        const textarea = form.querySelector("textarea"); // Retrieve the textarea inside the form
+        const text = textarea.value;                     // Get textarea value
+        KanbanTest.replaceElement(idItem, {              // replace the item with new info
             title: text
         })
-        //formItem.parentNode.removeChild(formItem);  // remove form from html structure after modification
-        form.remove();
+        form.remove(); // remove form from html structure after modification
     });
    
     // Remove the form when Cancel button is clicked
     document.getElementById("CancelBtn").onclick = function() {
-        // formItem.parentNode.removeChild(formItem);
         const form = this.closest('form');
         console.log(form.querySelector("textarea"))
         // Supprimer le formulaire
