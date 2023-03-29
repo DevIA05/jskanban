@@ -101,7 +101,7 @@
             e.preventDefault();
             var text = e.target[0].value;
             KanbanTest.addElement(boardId, {
-              id: text,
+              id: getLastIdItemOfBoard(boardId),
               title: text
             });
             formItem.parentNode.removeChild(formItem);
@@ -145,6 +145,18 @@
                   alert("right-click at (" + `${e.pageX}` + "," + `${e.pageX}` + ")")
                 },
                 class: ["peppe", "bello"]
+              },
+              {
+                title: "test1",
+                id: 4
+              },
+              {
+                title: "test2",
+                id: 5
+              },
+              {
+                title: "test3",
+                id: 3
               }
             ]
           },
@@ -158,6 +170,10 @@
               },
               {
                 title: "Run?"
+              },
+              {
+                title: "test11",
+                id: 11
               }
             ]
           },
