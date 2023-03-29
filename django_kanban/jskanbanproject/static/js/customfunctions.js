@@ -21,6 +21,7 @@ function modifyTask(el){
     formItem.addEventListener("submit", function(e) {
         e.preventDefault();
         const form = e.target.closest("form");           // Get html tag form parent
+        console.warn(form)
         const textarea = form.querySelector("textarea"); // Retrieve the textarea inside the form
         const text = textarea.value;                     // Get textarea value
         KanbanTest.replaceElement(idItem, {              // replace the item with new info
