@@ -55,6 +55,9 @@
     </style>
   </head>
   <body>
+    
+    {% csrf_token %}
+
     <div id="myKanban"></div>
     <button id="addDefault">Add "Default" board</button>
     <br />
@@ -76,8 +79,22 @@
           enabled: true,
         },
 
-        dragendBoard: function (el, source) {
+        dropBoard: function (el, target, source, sibling) {
+          console.warn("----------------- dropBoard-ICI -----------")
+          console.log(" ============= el =================")
+          console.log(el)
+          console.log(" ============= target =================")
+          console.log(target)
+          console.log(" ============= source =================")
+          console.log(source)
+          console.log(" ============= sibling =================")
+          console.log(sibling)
+        },
+
+        dragendBoard: function(el) {
             console.warn("----------------- dragEndBoard-ICI -----------")
+            console.log(el)
+            sendBoardPosition(el)
 
         },
 
@@ -124,9 +141,10 @@
           class: 'custom-button',
           footer: true
         },
-        boards: [
+        boards: {{data|safe}}
+        {% comment %} boards: [
           {
-            id: "_todo",
+            id: "1",
             title: "To Do (Can drop item only in working)",
             class: "info,good",
             dragTo: ["_working"],
@@ -169,7 +187,7 @@
             ]
           },
           {
-            id: "_working",
+            id: "2",
             title: "Working (Try drag me too)",
             class: "warning",
             item: [
@@ -199,7 +217,7 @@
               }
             ]
           }
-        ]
+        ] {% endcomment %}
       });
 
       var toDoButton = document.getElementById("addToDo");
@@ -255,6 +273,13 @@
 
     <script src="{% static 'js/jkanban.min.js' %}"></script>
     <script src="{% static 'js/customfunctions.js' %}"></script>
+    <script src="{% static 'js/apiRest.js' %}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous">
+      defer
+    </script> 
 
   </body>
 </html>
