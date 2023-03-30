@@ -21,7 +21,9 @@ from . import update
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index),
-    path('api/colonne', update.boardPosition, name="ubp")
+    path('api/colonne', update.boardPosition, name="ubp"),
+    path('api/task', update.editTask, name="uet"),
+    path('api/tasks', update.tasksPosition, name="utp"),
     # path('api/', include('api.urls')),
 
 ]
