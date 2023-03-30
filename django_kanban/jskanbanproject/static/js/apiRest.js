@@ -47,6 +47,14 @@ function extractTaskPositionInformations(el){
     )    
 }
 
+function addTask(title, boardId){
+    dataRequest(
+        data = {"title": title, "boardId": boardId},
+        url = "api/task-add",
+        type = "POST"
+    )
+}
+
 function dataRequest(data, url, type){
     const csrf  = $('input[name="csrfmiddlewaretoken"]').val()   // collect token
     // ------------------- Send data to view -------------------
@@ -61,6 +69,12 @@ function dataRequest(data, url, type){
         dataType: "json",     // The type of data that you're expecting back from the server.
         // ------------------- Receiving data from the view -------------------
         success: function (response) {
+            console.warn("============  RESPONSE ==============")
+            // if(response["code"] == "addTask"){
+            //     KanbanTest.replaceElement(-1, {              // replace the item with new info
+            //         id: reponse["idTask"]
+            //     })
+            //}
 
         },
         failure: function () {
