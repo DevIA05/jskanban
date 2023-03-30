@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/colonne', update.boardPosition, name="ubp"),
     path('api/task', update.editTask, name="uet"),
     path('api/tasks', update.tasksPosition, name="utp"),
+    path('api/task-add', update.addTask, name = "uat"),
     # path('api/', include('api.urls')),
 
 ]
