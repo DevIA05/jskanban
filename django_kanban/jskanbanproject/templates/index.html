@@ -8,6 +8,8 @@
 
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/jkanban.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}" />
+
     <link
       href="https://fonts.googleapis.com/css?family=Lato"
       rel="stylesheet"
@@ -69,6 +71,8 @@
     <br />
     <button id="removeElement">Remove "My Task Test"</button>
 
+    {% include 'modal.html' %}
+
     <script src="{% static 'js/jkanban.js' %}"></script>
     <script>
 
@@ -83,22 +87,11 @@
         },
 
         dropBoard: function (el, target, source, sibling) {
-          console.warn("----------------- dropBoard-ICI -----------")
-          console.log(" ============= el =================")
-          console.log(el)
-          console.log(" ============= target =================")
-          console.log(target)
-          console.log(" ============= source =================")
-          console.log(source)
-          console.log(" ============= sibling =================")
-          console.log(sibling)
         },
 
         dragendBoard: function(el) {
             console.warn("----------------- dragEndBoard-ICI -----------")
-            console.log(el)
             sendBoardPosition(el)
-
         },
 
         click: function(el) {
@@ -289,6 +282,7 @@
     <script src="{% static 'js/jkanban.min.js' %}"></script>
     <script src="{% static 'js/customfunctions.js' %}"></script>
     <script src="{% static 'js/apiRest.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
     <script
       src="https://code.jquery.com/jquery-3.6.1.min.js"
       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="

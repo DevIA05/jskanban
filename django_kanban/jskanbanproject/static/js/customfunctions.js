@@ -49,26 +49,33 @@ function deleteIcon(){
     return '<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9.87871 14.1213L12 12M14.1213 9.87868L12 12M12 12L9.87871 9.87868M12 12L14.1213 14.1213" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> <path d="M21 3.6V20.4C21 20.7314 20.7314 21 20.4 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
 }
 
-function modifyTitles() {
-    console.log("================== Modify titles ======================")
-    // Récupère tous les éléments avec la classe "kanban-title-board"
-    let titleElements = document.querySelectorAll('.kanban-title-board');
 
-    // Parcourt chaque élément et ajoute un écouteur d'événement pour la modification du texte
-    titleElements.forEach(function(titleElement) {
-        titleElement.contentEditable = true;
-        titleElement.addEventListener('input', function() {
-        // Vérifie si l'élément a le focus
-            if (document.activeElement !== titleElement) {
-                // Récupère le nouveau texte et l'affiche dans la console
-                let modifiedText = titleElement.textContent;
-                console.log(modifiedText);
-            }
-        });
-    });
+function addClickEventToTitle() {
+    var boards = document.getElementsByClassName("kanban-title-board");
+    for (var i = 0; i < boards.length; i++) {
+      boards[i].setAttribute("onclick", "editTitleModal(this)");
+    }
   }
 
-// ====================================================
-// ================ FUNCTION ==========================
-// ==================================================== 
-modifyTitles()
+// function editTitleModal(){
+//     // Sélectionnez tous les éléments avec la classe "kanban-title-board"
+//     var boardTitles = document.querySelectorAll(".kanban-title-board");
+//     // Ajoutez un gestionnaire d'événements pour chaque élément avec la classe "kanban-title-board"
+//     boardTitles.forEach(function(title) {
+//         title.addEventListener("click", function() {
+//             // Affiche le modal
+//             modal.style.display = "block";
+//             const input = modal.querySelector("input");
+//             input.value = title.innerHTML;
+
+//             document.getElementById("modalBtn").onclick = function() {
+//                 modal.style.display = "none";
+//                 console.log()                
+//             }
+            
+
+//         });
+//     });
+// }
+
+addClickEventToTitle()
