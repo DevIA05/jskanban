@@ -112,6 +112,11 @@
           console.log(target.parentElement.getAttribute('data-id'));
           console.log(el, target, source, sibling)
         },
+        dragendEl: function(el){
+          console.warn("----------------- dragendEl-ICI -----------")
+          extractTaskPositionInformations(el)
+        },
+
         buttonClick: function(el, boardId) {
           console.log(el);
           console.log(boardId);
