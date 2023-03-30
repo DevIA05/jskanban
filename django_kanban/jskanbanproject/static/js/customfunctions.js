@@ -28,6 +28,7 @@ function modifyTask(el){
             title: text
         })
         form.remove(); // remove form from html structure after modification
+        sendEditTask(idItem, text)
     });
 }
 
