@@ -71,6 +71,9 @@
 
     <script src="{% static 'js/jkanban.js' %}"></script>
     <script>
+
+      let max_id = {{max_id|safe}}
+
       var KanbanTest = new jKanban({
         element: "#myKanban",
         gutter: "10px",
@@ -118,6 +121,7 @@
         },
 
         buttonClick: function(el, boardId) {
+          console.warn("----------------- buttonClick-ICI -----------")
           console.log(el);
           console.log(boardId);
           // create a form to enter element
@@ -130,11 +134,14 @@
           formItem.addEventListener("submit", function(e) {
             e.preventDefault();
             var text = e.target[0].value;
+            const pos = getLastIdItemOfBoard(boardId)
+            max_id += 1
             KanbanTest.addElement(boardId, {
-              id: getLastIdItemOfBoard(boardId),
+              id: max_id,
               title: text
             });
             formItem.parentNode.removeChild(formItem);
+            addTask(text, boardId)
           });
           document.getElementById("CancelBtn").onclick = function() {
             formItem.parentNode.removeChild(formItem);
@@ -146,7 +153,7 @@
           class: 'custom-button',
           footer: true
         },
-        boards: {{data|safe}}
+        boards: {{data|safe}},
         {% comment %} boards: [
           {
             id: "1",

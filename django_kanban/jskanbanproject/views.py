@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from jskanbanproject.models import Task, Column
 import pdb; #pdb.set_trace()
+from django.db.models import Max
+
 
 def index(request):
-    data = getDataFromDB()
-    return render(request, "index.html", context = {'data': data})
+    data, max_id = getDataFromDB()
+    return render(request, "index.html", context = {'data': data, "max_id": max_id})
 
 #** Send tasks grouped by column
 #*  by sorting columns and tasks according to their position
@@ -13,6 +15,7 @@ def getDataFromDB():
     
     # retrieve all columns
     columns = Column.objects.all().order_by('position')
+    max_id = Task.objects.aggregate(Max('id'))['id__max']
 
     # create a list to store the results
     result_list = []
@@ -39,6 +42,6 @@ def getDataFromDB():
         result_list.append(column_dict)
 
     # print the result list
-    return result_list
+    return result_list, max_id
 
 
