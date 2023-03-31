@@ -49,33 +49,64 @@ function deleteIcon(){
     return '<svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M9.87871 14.1213L12 12M14.1213 9.87868L12 12M12 12L9.87871 9.87868M12 12L14.1213 14.1213" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> <path d="M21 3.6V20.4C21 20.7314 20.7314 21 20.4 21H3.6C3.26863 21 3 20.7314 3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
 }
 
-
-function addClickEventToTitle() {
-    var boards = document.getElementsByClassName("kanban-title-board");
+/** Adds the content editable attribute to all elements that have kanban-title-board class 
+*/
+function addContenteditableToBoards() {
+    const boards = document.getElementsByClassName("kanban-title-board");
     for (var i = 0; i < boards.length; i++) {
-      boards[i].setAttribute("onclick", "editTitleModal(this)");
+        boards[i].setAttribute("contenteditable", true)
     }
-  }
+}
 
-// function editTitleModal(){
-//     // Sélectionnez tous les éléments avec la classe "kanban-title-board"
-//     var boardTitles = document.querySelectorAll(".kanban-title-board");
-//     // Ajoutez un gestionnaire d'événements pour chaque élément avec la classe "kanban-title-board"
-//     boardTitles.forEach(function(title) {
-//         title.addEventListener("click", function() {
-//             // Affiche le modal
-//             modal.style.display = "block";
-//             const input = modal.querySelector("input");
-//             input.value = title.innerHTML;
+/** Adds the content editable attribute to all title that have kanban-item class 
+*/
+function addContenteditableToTasks() {
+    // Get all elements with class "kanban-item"
+    const kanbanItems = document.querySelectorAll(".kanban-item");
+    // Add the "contenteditable" attribute to each "div" element inside "kanban-item" except 
+    // div with .item_handle.drag_handler class
+    kanbanItems.forEach(function(kanbanItem) {
+        const taskDiv = kanbanItem.querySelector("div:not(.item_handle.drag_handler)");
+        taskDiv.setAttribute("contenteditable", true);
+    });
+}
 
-//             document.getElementById("modalBtn").onclick = function() {
-//                 modal.style.display = "none";
-//                 console.log()                
-//             }
-            
+/** Add to each element with the contenteditable attribute
+ *  a function that triggered when focus is lost and
+ *  when keydown is pressed trigger the previous function. 
+ */ 
+function editTitles() {
+    const editableDivs = document.querySelectorAll("[contenteditable]");
+    editableDivs.forEach(function(editableDiv) {
+        // Add a "keydown" event listener to each element
+        editableDiv.addEventListener("keydown", function(event) {
+            // Check if the "Enter" key is pressed
+            if (event.keyCode === 13) {
+                // Prevent the creation of a new line
+                event.preventDefault();
+                // Validate the entered text
+                editableDiv.blur();
+            }
+        });
+        // Add a "blur" event listener to each element
+        // When the user leaves the element (loses focus), the function is called
+        editableDiv.addEventListener("blur", function() {
+            // Get the entered text
+            const text = editableDiv.textContent;
+            // Get the id of the task or board depending on the class
+            // of the closest element that matches a given selector by
+            // walking up the DOM tree
+            let id;
+            if (editableDiv.closest('.kanban-board[data-id]')) {
+                id = editableDiv.closest('.kanban-board[data-id]').dataset.id;
+            } else if (editableDiv.closest('.kanban-item')) {
+                id = editableDiv.closest('.kanban-item[data-eid]').dataset.eid;
+            }
+            console.log(id)
+        });
+    });
+}
 
-//         });
-//     });
-// }
-
-addClickEventToTitle()
+addContenteditableToBoards()
+addContenteditableToTasks()
+editTitles()
