@@ -78,11 +78,15 @@ function dataRequest(data, url, type){
         // ------------------- Receiving data from the view -------------------
         success: function (response) {
             console.warn("============  RESPONSE ==============")
-            // if(response["code"] == "addTask"){
-            //     KanbanTest.replaceElement(-1, {              // replace the item with new info
-            //         id: reponse["idTask"]
-            //     })
-            //}
+            if("element" in response){
+                if(response["element"] === "task"){
+                    const task = KanbanTest.findElement("newTask")
+                    task.setAttribute('data-eid', String(response["id"]));
+                } else if(response["element"] === "board"){
+                    const board = KanbanTest.findBoard("New Board")
+                    board.setAttribute('data-id', String(response["id"]));
+                }
+            }
 
         },
         failure: function () {

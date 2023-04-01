@@ -76,9 +76,6 @@
     <script src="{% static 'js/jkanban.js' %}"></script>
     <script>
 
-      let max_id = {{max_id|safe}}
-      let max_idBoard = {{max_idBoard|safe}}
-
       var KanbanTest = new jKanban({
         element: "#myKanban",
         gutter: "10px",
@@ -125,14 +122,14 @@
           formItem.addEventListener("submit", function(e) {
             e.preventDefault();
             var text = e.target[0].value;
-            max_id += 1
+            const id = "newTask"
             KanbanTest.addElement(boardId, {
-              id: max_id,
+              id: id,
               title: text
             });
             formItem.parentNode.removeChild(formItem);
             addTask(text, boardId)
-            addContenteditableToTask(max_id)
+            addContenteditableToTask(id)
           });
           document.getElementById("CancelBtn").onclick = function() {
             formItem.parentNode.removeChild(formItem);
@@ -239,17 +236,16 @@
 
       var addBoardDefault = document.getElementById("addDefault");
       addBoardDefault.addEventListener("click", function() {
-        max_idBoard += 1
-        const title = "Kanban Default"
+        const title = "New Board"
         KanbanTest.addBoards([
           {
-            id: String(max_idBoard),
+            id: title,
             title: title,
             item: [
             ]
           }
         ]);
-        addContenteditableToBoard(String(max_idBoard))
+        addContenteditableToBoard(title)
         addColumn(title)
       });
       

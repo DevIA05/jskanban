@@ -62,8 +62,10 @@ def addTask(request):
         max_position = Task.objects.filter(idcol_id=idBoard).aggregate(Max('position'))['position__max']
         if(max_position is None): max_position = 1
         else: max_position += 1
-        Task(title=title, idcol=Column.objects.get(id=idBoard), position=max_position).save()
-        return JsonResponse({"response": "success"})
+        newTask = Task(title=title, idcol=Column.objects.get(id=idBoard), position=max_position)
+        newTask.save()
+        id = newTask.id
+        return JsonResponse({"element": "task", "id": id})
 
 
 def addBoard(request):
@@ -72,7 +74,9 @@ def addBoard(request):
         max_position = Column.objects.aggregate(Max('position'))['position__max']
         if(max_position is None): max_position = 1
         else: max_position += 1
-        Column(title= title, position = max_position).save()
-        return JsonResponse({"response": "success"})
+        newBoard = Column(title= title, position = max_position)
+        newBoard.save()
+        id = newBoard.id
+        return JsonResponse({"element": "board", "id": id})
         
 
