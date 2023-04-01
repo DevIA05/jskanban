@@ -77,6 +77,7 @@
     <script>
 
       let max_id = {{max_id|safe}}
+      let max_idBoard = {{max_idBoard|safe}}
 
       var KanbanTest = new jKanban({
         element: "#myKanban",
@@ -238,24 +239,20 @@
 
       var addBoardDefault = document.getElementById("addDefault");
       addBoardDefault.addEventListener("click", function() {
+        max_idBoard += 1
+        const title = "Kanban Default"
         KanbanTest.addBoards([
           {
-            id: "_default",
-            title: "Kanban Default",
+            id: String(max_idBoard),
+            title: title,
             item: [
-              {
-                title: "Default Item"
-              },
-              {
-                title: "Default Item 2"
-              },
-              {
-                title: "Default Item 3"
-              }
             ]
           }
         ]);
+        addContenteditableToBoard(String(max_idBoard))
+        addColumn(title)
       });
+      
 
       var removeBoard = document.getElementById("removeBoard");
       removeBoard.addEventListener("click", function() {

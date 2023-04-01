@@ -31,11 +31,12 @@ def boardPosition(request):
     return JsonResponse({"response": "success"})
 
 #** Edit tasks
-def editTask(request):
+def editTitle(request):
     if request.method == 'POST':
         title = request.POST.get("data[title]")
         id = int(request.POST.get("data[id]"))
         code = request.POST.get("data[code]")
+        print(code + "  ---  " + str(id))
         if(code == "task"): Task.objects.filter(id=id).update(title=title)
         else: Column.objects.filter(id=id).update(title=title)
     return JsonResponse({"response": "success"})
@@ -65,5 +66,13 @@ def addTask(request):
         return JsonResponse({"response": "success"})
 
 
-    
+def addBoard(request):
+    if request.method == "POST":
+        title = request.POST.get("data[title]")
+        max_position = Column.objects.aggregate(Max('position'))['position__max']
+        if(max_position is None): max_position = 1
+        else: max_position += 1
+        Column(title= title, position = max_position).save()
+        return JsonResponse({"response": "success"})
+        
 

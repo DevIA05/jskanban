@@ -19,7 +19,7 @@ function sendBoardPosition(element){
 function sendEditTitle(id, title, code){
     dataRequest(
         data = {"id": id,  "title": title, "code": code},
-        url = "api/task",
+        url = "api/title",
         type = "POST")
 }
 
@@ -51,6 +51,14 @@ function addTask(title, boardId){
     dataRequest(
         data = {"title": title, "boardId": boardId},
         url = "api/task-add",
+        type = "POST"
+    )
+}
+
+function addColumn(title){
+    dataRequest(
+        data = {"title": title},
+        url = "api/board-add",
         type = "POST"
     )
 }

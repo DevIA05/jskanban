@@ -75,9 +75,10 @@ function addContenteditableToTask(id){
 
 function addContenteditableToBoard(id){
     const board = KanbanTest.findBoard(id)
-    taskTitle = kanbanItem.querySelector("div:not(.item_handle.drag_handler)");
-    taskTitle.setAttribute("contenteditable", true)
-    editTitle(taskTitle)
+    console.log(board)
+    boardTitle = board.querySelector(".kanban-title-board");
+    boardTitle.setAttribute("contenteditable", true)
+    editTitle(boardTitle)
 }
 
 addContenteditableToBoards()

@@ -22,9 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index),
     path('api/colonne', update.boardPosition, name="ubp"),
-    path('api/task', update.editTask, name="uet"),
+    path('api/title', update.editTitle, name="uet"),
     path('api/tasks', update.tasksPosition, name="utp"),
     path('api/task-add', update.addTask, name = "uat"),
+    path('api/board-add', update.addBoard, name = "uab"),
     # path('api/', include('api.urls')),
 
 ]
