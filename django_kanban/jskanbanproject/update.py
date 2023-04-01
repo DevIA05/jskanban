@@ -35,7 +35,9 @@ def editTask(request):
     if request.method == 'POST':
         title = request.POST.get("data[title]")
         id = int(request.POST.get("data[id]"))
-        Task.objects.filter(id=id).update(title=title)
+        code = request.POST.get("data[code]")
+        if(code == "task"): Task.objects.filter(id=id).update(title=title)
+        else: Column.objects.filter(id=id).update(title=title)
     return JsonResponse({"response": "success"})
 
 #** Update tasks position
@@ -58,9 +60,9 @@ def addTask(request):
         idBoard = request.POST.get("data[boardId]")
         max_position = Task.objects.filter(idcol_id=idBoard).aggregate(Max('position'))['position__max']
         if(max_position is None): max_position = 1
+        else: max_position += 1
         Task(title=title, idcol=Column.objects.get(id=idBoard), position=max_position).save()
-        idTask = Task.objects.get(title=title).id
-        return JsonResponse({"idTask": idTask, "code": "addTask"})
+        return JsonResponse({"response": "success"})
 
 
     

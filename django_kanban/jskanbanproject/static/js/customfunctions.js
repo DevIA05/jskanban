@@ -1,46 +1,3 @@
-console.log(KanbanTest)
-
-/** Modify the information of a task
- * 
- * @param {Object} el, html structure of clicked element  
- */
-function modifyTask(el){
-    
-    // Extract attribute
-    const title = el.textContent
-    const idItem = el.getAttribute("data-eid")
-    const boardId = KanbanTest.getParentBoardID(idItem)
-
-    // Create form to edit the text
-    const formItem = document.createElement("form");
-    formItem.setAttribute("class", "itemform");
-    formItem.innerHTML = `<div class="form-group"><textarea class="form-control" rows="2" autofocus>${title}</textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Edit</button><button type="button" onclick="cancelForm(this)" class="btn btn-default btn-xs pull-right">Cancel</button></div>`;
-    KanbanTest.addForm(boardId, formItem);
-    
-    // Click on Change button
-    formItem.addEventListener("submit", function(e) {
-        e.preventDefault();
-        const form = e.target.closest("form");           // Get html tag form parent
-        console.warn(form)
-        const textarea = form.querySelector("textarea"); // Retrieve the textarea inside the form
-        const text = textarea.value;                     // Get textarea value
-        KanbanTest.replaceElement(idItem, {              // replace the item with new info
-            title: text
-        })
-        form.remove(); // remove form from html structure after modification
-        sendEditTask(idItem, text)
-    });
-}
-
-/** Deletes the form
- * where the clicked cancel button is contained
- * @param {Object} btnCancel 
- */
-function cancelForm(btnCancel){
-    const form = btnCancel.closest('form');
-    form.remove();
-}
-
 /** SVG delete icon
  * 
  * @returns {string}, svg tag
@@ -55,6 +12,7 @@ function addContenteditableToBoards() {
     const boards = document.getElementsByClassName("kanban-title-board");
     for (var i = 0; i < boards.length; i++) {
         boards[i].setAttribute("contenteditable", true)
+        editTitle(boards[i])
     }
 }
 
@@ -68,6 +26,7 @@ function addContenteditableToTasks() {
     kanbanItems.forEach(function(kanbanItem) {
         const taskDiv = kanbanItem.querySelector("div:not(.item_handle.drag_handler)");
         taskDiv.setAttribute("contenteditable", true);
+        editTitle(taskDiv)
     });
 }
 
@@ -75,38 +34,51 @@ function addContenteditableToTasks() {
  *  a function that triggered when focus is lost and
  *  when keydown is pressed trigger the previous function. 
  */ 
-function editTitles() {
-    const editableDivs = document.querySelectorAll("[contenteditable]");
-    editableDivs.forEach(function(editableDiv) {
-        // Add a "keydown" event listener to each element
-        editableDiv.addEventListener("keydown", function(event) {
-            // Check if the "Enter" key is pressed
-            if (event.keyCode === 13) {
-                // Prevent the creation of a new line
-                event.preventDefault();
-                // Validate the entered text
-                editableDiv.blur();
-            }
-        });
-        // Add a "blur" event listener to each element
-        // When the user leaves the element (loses focus), the function is called
-        editableDiv.addEventListener("blur", function() {
-            // Get the entered text
-            const text = editableDiv.textContent;
-            // Get the id of the task or board depending on the class
-            // of the closest element that matches a given selector by
-            // walking up the DOM tree
-            let id;
-            if (editableDiv.closest('.kanban-board[data-id]')) {
-                id = editableDiv.closest('.kanban-board[data-id]').dataset.id;
-            } else if (editableDiv.closest('.kanban-item')) {
-                id = editableDiv.closest('.kanban-item[data-eid]').dataset.eid;
-            }
-            console.log(id)
-        });
+function editTitle(element) {
+    // Add a "keydown" event listener to each element
+    element.addEventListener("keydown", function(event) {
+        // Check if the "Enter" key is pressed
+        if (event.keyCode === 13) {
+            // Prevent the creation of a new line
+            event.preventDefault();
+            // Validate the entered text
+            element.blur();
+        }
     });
+    // Add a "blur" event listener to each element
+    // When the user leaves the element (loses focus), the function is called
+    element.addEventListener("blur", function() {
+        // Get the entered text
+        const text = element.textContent;
+        // Get the id of the task or board depending on the class
+        // of the closest element that matches a given selector by
+        // walking up the DOM tree
+        let id; let code;
+        if (element.parentNode.classList.contains('kanban-item')) {
+            id = element.parentNode.dataset.eid;
+            code = "task"
+        } else if (element.parentNode.parentNode.classList.contains('kanban-board')) {
+            id = element.parentNode.parentNode.dataset.id;
+            code = "board"
+        }
+        console.log(code + " ----- " + id)
+        sendEditTitle(id, text, code)
+    });
+}
+
+function addContenteditableToTask(id){
+    const task = KanbanTest.findElement(id)
+    taskTitle = task.querySelector("div:not(.item_handle.drag_handler)");
+    taskTitle.setAttribute("contenteditable", true)
+    editTitle(taskTitle)
+}
+
+function addContenteditableToBoard(id){
+    const board = KanbanTest.findBoard(id)
+    taskTitle = kanbanItem.querySelector("div:not(.item_handle.drag_handler)");
+    taskTitle.setAttribute("contenteditable", true)
+    editTitle(taskTitle)
 }
 
 addContenteditableToBoards()
 addContenteditableToTasks()
-editTitles()

@@ -16,9 +16,9 @@ function sendBoardPosition(element){
  * @param {int} id 
  * @param {string} title 
  */
-function sendEditTask(id, title){
+function sendEditTitle(id, title, code){
     dataRequest(
-        data = {"id": id,  "title": title},
+        data = {"id": id,  "title": title, "code": code},
         url = "api/task",
         type = "POST")
 }

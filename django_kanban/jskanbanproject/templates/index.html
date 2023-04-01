@@ -95,10 +95,7 @@
         },
 
         click: function(el) {
-
           console.warn("----------------- click-ICI -----------")
-          {% comment %} modifyTask(el) {% endcomment %}
-          console.log("Trigger on all items click!");
         },
         context: function(el, e) {
           console.log("Trigger on all items right-click!");
@@ -127,7 +124,6 @@
           formItem.addEventListener("submit", function(e) {
             e.preventDefault();
             var text = e.target[0].value;
-            const pos = getLastIdItemOfBoard(boardId)
             max_id += 1
             KanbanTest.addElement(boardId, {
               id: max_id,
@@ -135,6 +131,7 @@
             });
             formItem.parentNode.removeChild(formItem);
             addTask(text, boardId)
+            addContenteditableToTask(max_id)
           });
           document.getElementById("CancelBtn").onclick = function() {
             formItem.parentNode.removeChild(formItem);
