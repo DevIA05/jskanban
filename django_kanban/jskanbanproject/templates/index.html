@@ -8,7 +8,8 @@
 
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/jkanban.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/modal.css' %}" />
+    {% comment %} <link rel="stylesheet" href="{% static 'css/modal.css' %}" /> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/customStyle.css' %}" />
 
     <link
       href="https://fonts.googleapis.com/css?family=Lato"
@@ -60,18 +61,19 @@
     
     {% csrf_token %}
 
-    <div id="myKanban"></div>
     <button id="addDefault">Add "Default" board</button>
     <br />
+    <div id="myKanban"></div>
+    {% comment %} <br />
     <button id="addToDo">Add element in "To Do" Board</button>
     <br />
     <button id="addToDoAtPosition">Add element in "To Do" Board at position 2</button>
     <br />
     <button id="removeBoard">Remove "Done" Board</button>
     <br />
-    <button id="removeElement">Remove "My Task Test"</button>
+    <button id="removeElement">Remove "My Task Test"</button> {% endcomment %}
 
-    {% include 'modal.html' %}
+    {% comment %} {% include 'modal.html' %} {% endcomment %}
 
     <script src="{% static 'js/jkanban.js' %}"></script>
     <script>
@@ -220,7 +222,7 @@
         ] {% endcomment %}
       });
 
-      var toDoButton = document.getElementById("addToDo");
+      {% comment %} var toDoButton = document.getElementById("addToDo");
       toDoButton.addEventListener("click", function() {
         KanbanTest.addElement("_todo", {
           title: "Test Add"
@@ -232,7 +234,7 @@
         KanbanTest.addElement("_todo", {
           title: "Test Add at Pos"
         }, 1);
-      });
+      }); {% endcomment %}
 
       var addBoardDefault = document.getElementById("addDefault");
       addBoardDefault.addEventListener("click", function() {
@@ -249,7 +251,7 @@
         addColumn(title)
       });
       
-
+{% comment %} 
       var removeBoard = document.getElementById("removeBoard");
       removeBoard.addEventListener("click", function() {
         KanbanTest.removeBoard("_done");
@@ -263,16 +265,13 @@
       var allEle = KanbanTest.getBoardElements("_todo");
       allEle.forEach(function(item, index) {
         //console.log(item);
-      });
-
-      modifyTitles()
-
+      }); {% endcomment %}
     </script>
 
     <script src="{% static 'js/jkanban.min.js' %}"></script>
     <script src="{% static 'js/customfunctions.js' %}"></script>
     <script src="{% static 'js/api.js' %}"></script>
-    <script src="{% static 'js/modal.js' %}"></script>
+    {% comment %} <script src="{% static 'js/modal.js' %}"></script> {% endcomment %}
     <script
       src="https://code.jquery.com/jquery-3.6.1.min.js"
       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
