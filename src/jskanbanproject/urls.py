@@ -18,6 +18,8 @@ from django.urls import include, path
 from . import views
 from . import update
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index),
@@ -29,3 +31,5 @@ urlpatterns = [
     # path('api/', include('api.urls')),
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()
