@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jskanbanproject',
-    'api',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
