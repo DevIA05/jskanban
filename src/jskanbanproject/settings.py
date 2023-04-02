@@ -94,8 +94,21 @@ WSGI_APPLICATION = 'jskanbanproject.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    "default" : dj_database_url.parse(os.environ.get("DATABASE_URL"))
+
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        "default" : dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'jskanban', 
+            'USER': 'postgres',
+            'PASSWORD': '0000',
+            'HOST': '127.0.0.1', 
+            'PORT': '5432',
+    }
 }
 
 
