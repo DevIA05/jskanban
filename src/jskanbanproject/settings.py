@@ -17,6 +17,9 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2pqcre5yld^tr%=@%v&b1l&!jc6txw*3mo*h-6=hf0)d+%u1hg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -95,9 +98,10 @@ WSGI_APPLICATION = 'jskanbanproject.wsgi.application'
 # }
 
 
-if 'DATABASE_URL' in os.environ:
+if 'DATABASE_URL' in env: #os.environ:
     DATABASES = {
-        "default" : dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        "default" : dj_database_url.parse(env('DATABASE_URL'))
+        # "default" : dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
 else:
     DATABASES = {
